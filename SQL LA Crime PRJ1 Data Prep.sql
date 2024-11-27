@@ -281,7 +281,10 @@ SET month = TRIM(TO_CHAR(date, 'Month')),
 
 
 ---- Calculated Fields
-
+/*The below calculated fields are running totals that iterate based on a given interval or date categorey. 
+  The aggregation happens on the day level but the data is at the crime level and multiple crimes can happen in 
+  a single day. The ouptut of the query will show this. An aggregate table and analysis based project will 
+  address this in the future building off these calculations.*/
 -- Crime Counts Rolling
 
 ALTER TABLE crime_codes
