@@ -97,12 +97,9 @@ DECLARE
     i INT;
 BEGIN
     FOR i IN 1..6 LOOP
-        -- Update operation
         UPDATE la_crimes_temp
         SET crime_location = TRIM(REPLACE(crime_location, '  ', ' ')),
             cross_street = TRIM(REPLACE(cross_street, '  ', ' '));
-
-        -- Select operation
         PERFORM crime_location, cross_street
         FROM la_crimes_temp
         WHERE cross_street IS NOT NULL;
