@@ -65,15 +65,23 @@ DROP TABLE la_crimes_backup;
 
 COMMIT;
 
---- Clean Address fields of abnormal spaces (run until spaces are uniform and proper.)
-UPDATE la_crimes
-SET crime_location = TRIM(REPLACE(crime_location, '  ', ' ')),
-cross_street = TRIM(REPLACE(cross_street, '  ', ' '));
-SELECT
-	crime_location
-	,cross_street
-FROM la_crimes
-WHERE cross_street IS NOT NULL
+--- Clean Address fields of abnormal spaces.
+DO $$
+DECLARE
+    i INT;
+BEGIN
+    FOR i IN 1..6 LOOP
+        -- Update operation
+        UPDATE la_crimes
+        SET crime_location = TRIM(REPLACE(crime_location, '  ', ' ')),
+            cross_street = TRIM(REPLACE(cross_street, '  ', ' '));
+
+        -- Select operation
+        PERFORM crime_location, cross_street
+        FROM la_crimes
+        WHERE cross_street IS NOT NULL;
+    END LOOP;
+END $$;
 
 -- Create Reference tables
 
